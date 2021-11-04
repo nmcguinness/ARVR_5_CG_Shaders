@@ -9,11 +9,15 @@ Shader "ARVR/Diffuse Texture" {
 		  struct Input {
 			  float2 uv_MainTex;
 		  };
-		  sampler2D _MainTex;
-		  void surf(Input IN, inout SurfaceOutput o) {
-			  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
-		  }
-		  ENDCG
+
+	//Paint brush (how we sample? (point, bilinear, trilinear, anisotropic)
+	//UV (clamp, mirror, wrap)
+	  sampler2D _MainTex;
+	  void surf(Input IN, inout SurfaceOutput o) {
+		  //Cg and HLSL we can swizzle (float4, fixed4)
+		  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+	  }
+	  ENDCG
 	}
 		Fallback "Diffuse"
 }
