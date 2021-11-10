@@ -12,11 +12,11 @@ Shader "ARVR/Diffuse Alpha"
 		{
 			//add object to the correct queue for transparent rendering
 			Tags {"Queue" = "Transparent" "RenderType" = "Transparent" }
+			Cull Off
 
 			CGPROGRAM
 			// Physically based Standard lighting model, and enable shadows on all light types, enable alpha
-			#pragma surface surf Standard fullforwardshadows alpha:fade
-			#pragma target 3.0
+			#pragma surface surf Standard alpha:fade
 
 			sampler2D _MainTex;
 
@@ -36,7 +36,7 @@ Shader "ARVR/Diffuse Alpha"
 				o.Albedo = c.rgb;
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
-				o.Alpha = _Alpha;
+				o.Alpha = abs(_SinTime);
 			}
 			ENDCG
 		}

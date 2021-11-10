@@ -15,6 +15,7 @@ Shader "ARVR/Slice Normal Mapping" {
 		  };
 		  sampler2D _MainTex;
 		  sampler2D _BumpMap;
+
 		  void surf(Input IN, inout SurfaceOutput o) {
 			  clip(frac(IN.worldPos.y * 10) - 0.5);
 			  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
