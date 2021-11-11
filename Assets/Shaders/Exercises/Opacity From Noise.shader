@@ -1,4 +1,4 @@
-Shader "ARVR/Diffuse Alpha"
+Shader "ARVR/Opacity From Noise"
 {
 	Properties
 	{
@@ -38,8 +38,6 @@ Shader "ARVR/Diffuse Alpha"
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
 				o.Alpha = _Alpha;
-				//or make the effect time based
-				//o.Alpha = abs(_SinTime);
 			}
 			ENDCG
 		}

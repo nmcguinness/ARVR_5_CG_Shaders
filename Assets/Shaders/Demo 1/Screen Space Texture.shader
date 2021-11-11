@@ -1,4 +1,4 @@
-Shader "ARVR/ScreenPos" {
+Shader "ARVR/Screen Space Texture" {
 	Properties{
 	  _MainTex("Texture", 2D) = "white" {}
 	  _Detail("Detail", 2D) = "gray" {}

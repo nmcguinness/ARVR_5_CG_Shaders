@@ -1,4 +1,4 @@
-Shader "ARVR/Diffuse Texture" {
+Shader "ARVR/Simple Toon Shader" {
 	Properties{
 		 _MainTex("Texture", 2D) = "white" {}
 	}
@@ -13,8 +13,9 @@ Shader "ARVR/Diffuse Texture" {
 	  sampler2D _MainTex;
 
 	  void surf(Input IN, inout SurfaceOutput o) {
-		  //Cg and HLSL we can swizzle (float4, fixed4, half4) - swizzle means to interchange rgb e.g. grb, bgr
 		  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
+
+		  //TODO...
 	  }
 	  ENDCG
 	}
