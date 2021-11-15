@@ -8,14 +8,14 @@ Shader "ARVR/Screen Space Texture" {
 		SubShader{
 		  Tags { "RenderType" = "Opaque" }
 		  CGPROGRAM
-		  #pragma surface surf Lambert
+		  #pragma surface surf Lambert  //N.L
 		  struct Input {
 			  float2 uv_MainTex;
-			  float4 screenPos;
+			  float4 screenPos;  //new variable
 		  };
 		  sampler2D _MainTex;
 		  sampler2D _Detail;
-		  fixed _ScreenSpaceUMultiplier, _ScreenSpaceVMultiplier;
+		  fixed _ScreenSpaceUMultiplier, _ScreenSpaceVMultiplier;   //float(32), half(16), fixed(11)
 
 		  void surf(Input IN, inout SurfaceOutput o) {
 			  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
