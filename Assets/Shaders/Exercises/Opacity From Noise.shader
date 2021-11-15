@@ -3,10 +3,12 @@ Shader "ARVR/Opacity From Noise"
 	Properties
 	{
 		_Color("Color", Color) = (1,1,1,1)
-		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_MainTex("Diffuse", 2D) = "white" {}
+		_OpacityTex("Opacity", 2D) = "white" {}  //Add opacity texture
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
-		_Alpha("Alpha", Range(0,1)) = 0.5
+
+		_OpacityCutOff("Opacity Cut Off", Range(0,1)) = 0.5
 	}
 		SubShader
 		{
@@ -19,28 +21,37 @@ Shader "ARVR/Opacity From Noise"
 			#pragma surface surf Standard alpha:fade
 
 			sampler2D _MainTex;
-			sampler2D _OpacityTex;
+			sampler2D _OpacityTex;     //Add any variable(s) required for this texture
+			half _Glossiness;
+			half _Metallic;
+			fixed4 _Color;
+			fixed _OpacityCutOff;
 
 			struct Input
 			{
 				float2 uv_MainTex;
+				float2 uv_OpacityTex;  //Read the uv values (apply any tiling and offset from inspector)
 			};
-
-			half _Glossiness;
-			half _Metallic;
-			fixed4 _Color;
-			half _Alpha;
 
 			void surf(Input IN, inout SurfaceOutputStandard o)
 			{
 				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 				o.Albedo = c.rgb;
+
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
-				o.Alpha = _Alpha;
+
+				fixed4 alpha = tex2D(_OpacityTex, IN.uv_OpacityTex);
+				o.Alpha = (_OpacityCutOff <= alpha.r) ? 1 : 0;  //ternary operator
 			}
 			ENDCG
 		}
 
 			FallBack "Diffuse"
 }
+
+//Steps
+//1. Add opacity texture
+//2. Add any variable(s) required for this texture
+//3. Read the texture color
+//4. Use the color to set the o.Alpha in the surface shader!

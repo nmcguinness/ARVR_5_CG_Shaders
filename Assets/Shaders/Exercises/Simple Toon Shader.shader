@@ -1,3 +1,5 @@
+//TODO...
+
 Shader "ARVR/Simple Toon Shader" {
 	Properties{
 		 _MainTex("Texture", 2D) = "white" {}
@@ -14,8 +16,6 @@ Shader "ARVR/Simple Toon Shader" {
 
 	  void surf(Input IN, inout SurfaceOutput o) {
 		  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
-
-		  //TODO...
 	  }
 	  ENDCG
 	}

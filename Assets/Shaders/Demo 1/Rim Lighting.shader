@@ -1,4 +1,4 @@
-Shader "ARVR/RimLighting" {
+Shader "ARVR/Rim Lighting" {
 	Properties{
 	  _MainTex("Texture", 2D) = "white" {}
 	  _BumpMap("Bumpmap", 2D) = "bump" {}

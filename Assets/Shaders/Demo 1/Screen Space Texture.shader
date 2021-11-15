@@ -1,7 +1,9 @@
 Shader "ARVR/Screen Space Texture" {
 	Properties{
-	  _MainTex("Texture", 2D) = "white" {}
-	  _Detail("Detail", 2D) = "gray" {}
+	  _MainTex("Main Texture", 2D) = "white" {}
+	  _Detail("Screen Space Texture", 2D) = "gray" {}
+	  _ScreenSpaceUMultiplier("Screen Space U-Value Multipler", Range(0,20)) = 4.0
+	  _ScreenSpaceVMultiplier("Screen Space V-Value Multipler", Range(0,20)) = 6.0
 	}
 		SubShader{
 		  Tags { "RenderType" = "Opaque" }
@@ -13,13 +15,15 @@ Shader "ARVR/Screen Space Texture" {
 		  };
 		  sampler2D _MainTex;
 		  sampler2D _Detail;
+		  fixed _ScreenSpaceUMultiplier, _ScreenSpaceVMultiplier;
+
 		  void surf(Input IN, inout SurfaceOutput o) {
 			  o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
 			  float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
-			  screenUV *= float2(8,6);
-			  o.Albedo *= tex2D(_Detail, screenUV).rgb * 2;
+			  screenUV *= float2(_ScreenSpaceUMultiplier, _ScreenSpaceVMultiplier);
+			  o.Albedo *= tex2D(_Detail, screenUV).rgb;
 		  }
 		  ENDCG
-	}
-		Fallback "Diffuse"
+	  }
+		  Fallback "Diffuse"
 }
